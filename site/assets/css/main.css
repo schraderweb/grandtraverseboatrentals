@@ -26,7 +26,9 @@ body {
     font: 15px/1.6 'Lato';
     color: #222;
 }
-
+.navbar-scrolling  .top-bar__item{
+    color: #000 !important;
+  }
 .l-theme {
     position: relative;
     overflow-x: hidden;
