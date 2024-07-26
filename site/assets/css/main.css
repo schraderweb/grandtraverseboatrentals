@@ -5491,7 +5491,11 @@ span.sign {
 
 .section-advantages {
     padding-bottom: 100px;
-    padding-top: 50px;
+    /* padding-top: 50px; */
+    padding-top: 20px;
+}
+.b-main-slider__label:hover {
+    text-decoration: none !important;
 }
 
 @media (min-width:1700px) {
