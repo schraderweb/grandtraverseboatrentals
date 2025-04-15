@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        .price-fields {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Product Information</h1>
+        <form action="#" method="post" id="myform" enctype="multipart/form-data">
+            <div class="price-fields">
+                <div class="form-group">
+                    <label for="title">Select to edit a service</label>
+                    
+                </div>
+                <div class="form-group">
+                    <select name="" id="list-rentals">
+                        <option value="0" selected>new service</option>
+                      
+                    </select>
+                    <a id="link-rental" target="_self" href="#">click to view</a>
+                    <a href="#" id="deleteSelected">Delete</a>
+                    <br>
+                    <span id="link-rental-help" style="color: orange; font-weight: bold;"></span>
+                </div>
+                
+            </div>
+            <div class="form-group">
+                <label for="created_at">Created At:</label>
+                <input type="date" id="created_at" name="created_at" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
+            </div>
+            
+            <div class="price-fields">
+                <div class="form-group">
+                    <label for="one_day_price">One Day Price ($):</label>
+                    <input type="number" value="0" id="one_day_price" name="one_day_price" min="0" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="two_days_price">Two Days Price ($):</label>
+                    <input type="number" value="0"  id="two_days_price" name="two_days_price" min="0" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="three_days_price">Three Days Price ($):</label>
+                    <input type="number" value="0"  id="three_days_price" name="three_days_price" min="0" step="0.01" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="four_days_price">Four Days Price ($):</label>
+                    <input type="number" value="0"  id="four_days_price" name="four_days_price" min="0" step="0.01" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="featured_image">Featured Image:</label>
+                <input type="file" id="featured_image" name="featured_image" accept="image/*" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="gallry_image_one">gallry Image One:</label>
+                <input type="file" id="gallry_image_one" name="gallry_image_one" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label for="gallry_image_two">gallry Image Two:</label>
+                <input type="file" id="gallry_image_two" name="gallry_image_two" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label for="gallry_image_three">gallry Image Three:</label>
+                <input type="file" id="gallry_image_three" name="gallry_image_three" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label for="gallry_image_four">gallry Image Four:</label>
+                <input type="file" id="gallry_image_four" name="gallry_image_four" accept="image/*">
+            </div>
+            
+            <button type="submit" id="submit-button" class="submit-btn">Submit</button>
+            <!-- <div class="g-recaptcha" data-sitekey="6LcKQhcrAAAAAEQGW-4FEcIvkaAzaq_3IRp0otmO"></div> -->
+        </form>
+    </div>
+
+    <!-- <script  src="https://unpkg.com/@supabase/supabase-js@2"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+
+
+
+
+
+    
+
+
+
+        var myfile = '';
+        
+        // const publicClient = supabase.createClient('https://zpdkuhfqrovjupjzjzfa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwZGt1aGZxcm92anVwanpqemZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM4MDA4NTEsImV4cCI6MjA1OTM3Njg1MX0.NArMJkNJ3ZFSWGYEFeraBHEvFRER4qgaVSwxEdToLlU');
+        const publicClient = supabase.createClient('https://jcrgvjjjbivmfthfasmp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjcmd2ampqYml2bWZ0aGZhc21wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0MTUxMTcsImV4cCI6MjA1OTk5MTExN30.EDtY_r2Gl63gdThxOvtQXdO9PvbdsP9lCZh1DFNwdR4');
+        
+        const list = async () => {
+        const { data, error } = await publicClient
+        .from('rental')
+        .select('id,title');
+ 
+        const El = document.getElementById("list-rentals");
+        data.map((d) => {
+                let oImg = document.createElement("option");
+                oImg.setAttribute("value",d['id']);
+                oImg.innerHTML = d.title;
+                El.appendChild(oImg);
+        })
+        El.addEventListener("change",(e) => {
+            console.log("okay ichanged");
+            if(e.currentTarget.value != 0 ){
+                document.getElementById("link-rental").setAttribute("href",`http://127.0.0.1:5500/rental-details.html?id=${e.currentTarget.value}`);
+                document.getElementById("link-rental").setAttribute("target",`_blank`)
+                document.getElementById("link-rental-help").innerHTML = "leave any field blank if you don't want to change it"
+            }else{
+                document.getElementById("link-rental-help").innerHTML = "leave any field blank if you don't want to add it"
+            }
+        })
+        
+        
+
+        return data;
+    }
+    list();
+
+
+
+        const applicationState = {
+            title: "",
+            description: "",
+            one_day_price: "",
+            three_days_price: "",
+            four_days_price: "",
+            featured_image: "",
+            gallry_image_one: "",
+            gallry_image_two: "",
+            gallry_image_three: "",
+            gallry_image_four: "",
+        }
+        document.getElementById('submit-button').onclick = async (e) => {
+         
+        const selectedValue = document.getElementById("list-rentals").options[document.getElementById("list-rentals").selectedIndex].value;
+            console.log(selectedValue);
+            e.preventDefault();
+            if(selectedValue == 0){
+                addRecord();
+            }else{
+                updateRecord(selectedValue);
+            }
+            
+        }
+
+        const addRecord = () => {
+            // e.preventDefault();
+            const rentalInfo = document.querySelector("#myform");
+            const form = new FormData(rentalInfo);
+            
+            // console.log(form.values);
+            let rentalObjet = new Object();
+            var promiseArray = [];
+            for (var p of form) {
+                
+
+                let name = p[0];
+                let value = p[1];
+                // rentalObjet['id'] = 6;
+                rentalObjet['created_at'] = new Date();
+                if(name == "title") {
+                    rentalObjet['title'] = value;
+                }
+                if(name == "description") {
+                    rentalObjet['description'] = value;
+                }
+                if(name == "one_day_price") {
+                    rentalObjet['one_day_price'] = value;
+                }
+                if(name == "two_days_price") {
+                    rentalObjet['two_days_price'] = value;
+                }
+                if(name == "three_days_price") {
+                    rentalObjet['three_days_price'] = value;
+                }
+                if(name == "four_days_price") {
+                    rentalObjet['four_days_price'] = value;
+                }
+                if(name == "featured_image") {
+                    const p1 = new Promise((resolve, reject) => {
+                        var fr = new FileReader();  
+                        fr.onload = (e) => {
+                            
+                        resolve(e.target.result )
+
+                        };
+                        fr.onerror = reject;
+                    
+                        fr.readAsDataURL(p[1]);
+                    }).then((rs)=>{
+                            let txt = rs.split(",");
+                            console.log(txt);
+                            if(txt[1] == ''){
+                                rentalObjet['featured_image'] = null;
+                            }else{
+                                rentalObjet['featured_image'] = rs;
+                            }
+                            // rentalObjet['featured_image'] = rs;
+                            // console.log('resultX');
+                    });
+                    promiseArray.push(p1);
+                    // fr.readAsDataURL(p[1]);
+
+                }
+                if(name == "gallry_image_one") {
+                    const p2 =  new Promise((resolve, reject) => {
+                        var fr1 = new FileReader();  
+                        fr1.onload = (e) => {
+                        resolve(e.target.result )
+
+                        };
+                        fr1.onerror = reject;
+                    
+                        fr1.readAsDataURL(p[1]);
+                    }).then((rs)=>{
+                            
+                        let txt = rs.split(",");
+                            console.log(txt);
+                            if(txt[1] == ''){
+                                rentalObjet['gallry_image_one'] = null;
+                            }else{
+                                rentalObjet['gallry_image_one'] = rs;
+                            }
+                    });
+                    promiseArray.push(p2);
+                }
+                if(name == "gallry_image_two") {
+                    const p3 = new Promise((resolve, reject) => {
+                        var fr = new FileReader();  
+                        fr.onload = (e) => {
+                        resolve(e.target.result )
+
+                        };
+                        fr.onerror = reject;
+                    
+                        fr.readAsDataURL(p[1]);
+                    }).then((rs)=>{
+                            
+                        let txt = rs.split(",");
+                            console.log(txt);
+                            if(txt[1] == ''){
+                                rentalObjet['gallry_image_two'] = null;
+                            }else{
+                                rentalObjet['gallry_image_two'] = rs;
+                            }
+                    });
+                    promiseArray.push(p3);
+
+                }
+                if(name == "gallry_image_three") {
+                    const p4 = new Promise((resolve, reject) => {
+                        var fr = new FileReader();  
+                        fr.onload = (e) => {
+                        resolve(e.target.result )
+
+                        };
+                        fr.onerror = reject;
+                    
+                        fr.readAsDataURL(p[1]);
+                    }).then((rs)=>{
+                            
+                        let txt = rs.split(",");
+                            console.log(txt);
+                            if(txt[1] == ''){
+                                rentalObjet['gallry_image_three'] = null;
+                            }else{
+                                rentalObjet['gallry_image_three'] = rs;
+                            }
+                    });
+                    promiseArray.push(p4);
+                }
+                if(name == "gallry_image_four") {
+                    const p5 = new Promise((resolve, reject) => {
+                        var fr = new FileReader();  
+                        fr.onload = (e) => {
+                        resolve(e.target.result )
+
+                        };
+                        fr.onerror = reject;
+                    
+                        fr.readAsDataURL(p[1]);
+                    }).then((rs)=>{
+                            
+                        let txt = rs.split(",");
+                            console.log(txt);
+                            if(txt[1] == ''){
+                                rentalObjet['gallry_image_four'] = null;
+                            }else{
+                                rentalObjet['gallry_image_four'] = rs;
+                            }
+                    });
+                    promiseArray.push(p5);
+                }
+               
+
+                
+                
+            }
+            console.log("pp");
+            console.log(rentalObjet);
+        // console.log(publicClient);
+
+            Promise.all(promiseArray).then(function(){
+                const result = async () => {
+                        const { data, error } = await publicClient
+                        .from('rental')
+                        .insert(
+                
+                        rentalObjet
+                        ).select()
+                        
+                    }
+                    result().then(()=>{
+                        alert("operation done right : )")
+                    });
+
+            });
+        }
+        
+        const updateRecord = (selectedValue) => {
+            
+            const rentalInfo = document.querySelector("#myform");
+            const form = new FormData(rentalInfo);
+            
+            // console.log(form.values);
+            let rentalObjet = new Object();
+            var promiseArray = [];
+            for (var p of form) {
+                
+
+                let name = p[0];
+                let value = p[1];
+                // rentalObjet['id'] = 6;
+                rentalObjet['created_at'] = new Date();
+                if(name == "title") {
+                    value !== null && value !== "" ? rentalObjet['title'] = value : null;
+                } 
+                if(name == "description") {
+                    console.log("VALUX DESCR: " + value)
+                    if(value !== null && value !== "" && value !== '') {rentalObjet['description'] = value};
+                }
+                if(name == "one_day_price") {
+                    value !== null && value !== "" && value !== 0 && value !== "0" ? rentalObjet['one_day_price'] = value : null;
+                }
+                if(name == "two_days_price") {
+                    value !== null && value !== "" && value !== 0 && value !== "0" ? rentalObjet['two_days_price'] = value : null;
+                }
+                if(name == "three_days_price") {
+                    value !== null && value !== "" && value !== 0 && value !== "0" ? rentalObjet['three_days_price'] = value : null;
+                }
+                if(name == "four_days_price") {
+                    value !== null && value !== "" && value !== 0 && value !== "0" ? rentalObjet['four_days_price'] = value : null;
+                }
+                if(name == "featured_image") {
+                    const p1 = new Promise((resolve, reject) => {
+                        var fr = new FileReader();  
+                        fr.onload = (e) => {
+                            
+                        resolve(e.target.result )
+
+                        };
+                        fr.onerror = reject;
+                    
+                        fr.readAsDataURL(p[1]);
+                    }).then((rs)=>{
+                            let txt = rs.split(",");
+                            console.log(txt);
+                            if(txt[1] == ''){
+                                // rentalObjet['featured_image'] = null;
+                            }else{
+                                rentalObjet['featured_image'] = rs;
+                            }
+                            // rentalObjet['featured_image'] = rs;
+                            // console.log('resultX');
+                    });
+                    promiseArray.push(p1);
+                    // fr.readAsDataURL(p[1]);
+
+                }
+                if(name == "gallry_image_one") {
+                    const p2 =  new Promise((resolve, reject) => {
+                        var fr1 = new FileReader();  
+                        fr1.onload = (e) => {
+                        resolve(e.target.result )
+
+                        };
+                        fr1.onerror = reject;
+                    
+                        fr1.readAsDataURL(p[1]);
+                    }).then((rs)=>{
+                            
+                        let txt = rs.split(",");
+                            console.log(txt);
+                            if(txt[1] == ''){
+                                // rentalObjet['gallry_image_one'] = null;
+                            }else{
+                                rentalObjet['gallry_image_one'] = rs;
+                            }
+                    });
+                    promiseArray.push(p2);
+                }
+                if(name == "gallry_image_two") {
+                    const p3 = new Promise((resolve, reject) => {
+                        var fr = new FileReader();  
+                        fr.onload = (e) => {
+                        resolve(e.target.result )
+
+                        };
+                        fr.onerror = reject;
+                    
+                        fr.readAsDataURL(p[1]);
+                    }).then((rs)=>{
+                            
+                        let txt = rs.split(",");
+                            console.log(txt);
+                            if(txt[1] == ''){
+                                // rentalObjet['gallry_image_two'] = null;
+                            }else{
+                                rentalObjet['gallry_image_two'] = rs;
+                            }
+                    });
+                    promiseArray.push(p3);
+
+                }
+                if(name == "gallry_image_three") {
+                    const p4 = new Promise((resolve, reject) => {
+                        var fr = new FileReader();  
+                        fr.onload = (e) => {
+                        resolve(e.target.result )
+
+                        };
+                        fr.onerror = reject;
+                    
+                        fr.readAsDataURL(p[1]);
+                    }).then((rs)=>{
+                            
+                        let txt = rs.split(",");
+                            console.log(txt);
+                            if(txt[1] == ''){
+                                // rentalObjet['gallry_image_three'] = null;
+                            }else{
+                                rentalObjet['gallry_image_three'] = rs;
+                            }
+                    });
+                    promiseArray.push(p4);
+                }
+                if(name == "gallry_image_four") {
+                    const p5 = new Promise((resolve, reject) => {
+                        var fr = new FileReader();  
+                        fr.onload = (e) => {
+                        resolve(e.target.result )
+
+                        };
+                        fr.onerror = reject;
+                    
+                        fr.readAsDataURL(p[1]);
+                    }).then((rs)=>{
+                            
+                        let txt = rs.split(",");
+                            console.log(txt);
+                            if(txt[1] == ''){
+                                // rentalObjet['gallry_image_four'] = null;
+                            }else{
+                                rentalObjet['gallry_image_four'] = rs;
+                            }
+                    });
+                    promiseArray.push(p5);
+                }
+               
+
+                
+                
+            }
+            console.log("pp");
+            // console.log(rentalObjet);
+        // console.log(publicClientxxxx);
+
+            Promise.all(promiseArray).then(function(){
+                console.log("UPDATE FN");
+                
+                console.log(rentalObjet);
+                console.log(typeof(selectedValue));
+                
+                const result = async () => {
+                        const { data, error } = await publicClient
+                        .from('rental')
+                         .update(rentalObjet)
+                         .eq('id', Number(selectedValue))
+                        
+                    }
+                result().then(()=>{
+                    alert("operation UPDATE done right : )")
+                });
+
+            });
+        }
+        
+       
+        const deleteRecord = async (selectedValue) => {
+                if(Number(selectedValue) !== 0 )
+                    {
+                        const { error } = await publicClient
+                                    .from('rental')
+                                    .delete()
+                                    .eq('id', Number(selectedValue));
+                                    return error;
+                    }
+                } 
+        document.getElementById("deleteSelected").addEventListener("click", (e) => {
+            e.preventDefault();
+            const selectedValue = document.getElementById("list-rentals").options[document.getElementById("list-rentals").selectedIndex].value;
+            deleteRecord(selectedValue).then((status) =>{
+                console.log(status);
+                
+                alert("Operation DELETE done right")
+                document.location.reload();
+            })
+        })
+                              
+    </script>
+
+</body>
+</html>

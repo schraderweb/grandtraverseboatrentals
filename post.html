@@ -440,6 +440,47 @@
     <script src="assets/plugins/ofi.min.js"></script>
     <!-- User customization-->
     <script src="assets/js/custom.js"></script>
+
+
+
+    <script  src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+    <script>
+        
+        const publicClient = supabase.createClient('https://jcrgvjjjbivmfthfasmp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjcmd2ampqYml2bWZ0aGZhc21wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0MTUxMTcsImV4cCI6MjA1OTk5MTExN30.EDtY_r2Gl63gdThxOvtQXdO9PvbdsP9lCZh1DFNwdR4');
+  
+  
+  
+        const list = async () => {
+        const { data, error } = await publicClient
+        .from('rental')
+        .select('id,title');
+     
+  
+        const listEl1 = document.querySelectorAll(".dropdown-menu").forEach((el) => {
+          el.innerHTML ="";
+        });
+        const listEl = document.querySelectorAll(".dropdown-menu");
+        listEl.forEach((el) =>{
+            data.map((d) => {
+                let oImg = document.createElement("a");
+                oImg.setAttribute("href",'/rental-details.html?id='+d['id']);
+                oImg.innerHTML = d.title;
+                oImg.classList.add('dropdown-item');
+                el.appendChild(oImg);
+            })
+        })
+        
+        
+  
+        return data;
+    }
+          list();
+  
+  
+  
+        
+    </script>
       
      
   </body>
