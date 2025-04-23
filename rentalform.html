@@ -168,9 +168,22 @@
 
 
         var myfile = '';
+
+        const token = localStorage.getItem("token");
+        if(token == null){
+            alert("Please Login First")
+            window.location.href ="/loginform.html"
+        }
+        const options = {
+            global: {
+                headers: { 'Authorization': `Bearer ${token}` },
+            },
+        }
+
+
         
         // const publicClient = supabase.createClient('https://zpdkuhfqrovjupjzjzfa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwZGt1aGZxcm92anVwanpqemZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM4MDA4NTEsImV4cCI6MjA1OTM3Njg1MX0.NArMJkNJ3ZFSWGYEFeraBHEvFRER4qgaVSwxEdToLlU');
-        const publicClient = supabase.createClient('https://jcrgvjjjbivmfthfasmp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjcmd2ampqYml2bWZ0aGZhc21wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0MTUxMTcsImV4cCI6MjA1OTk5MTExN30.EDtY_r2Gl63gdThxOvtQXdO9PvbdsP9lCZh1DFNwdR4');
+        const publicClient = supabase.createClient('https://jcrgvjjjbivmfthfasmp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjcmd2ampqYml2bWZ0aGZhc21wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0MTUxMTcsImV4cCI6MjA1OTk5MTExN30.EDtY_r2Gl63gdThxOvtQXdO9PvbdsP9lCZh1DFNwdR4',options);
         
         const list = async () => {
         const { data, error } = await publicClient
@@ -187,7 +200,7 @@
         El.addEventListener("change",(e) => {
             console.log("okay ichanged");
             if(e.currentTarget.value != 0 ){
-                document.getElementById("link-rental").setAttribute("href",`http://127.0.0.1:5500/rental-details.html?id=${e.currentTarget.value}`);
+                document.getElementById("link-rental").setAttribute("href",`https://grandtraverseboatrentals.com/rental-details.html?id=${e.currentTarget.value}`);
                 document.getElementById("link-rental").setAttribute("target",`_blank`)
                 document.getElementById("link-rental-help").innerHTML = "leave any field blank if you don't want to change it"
             }else{
