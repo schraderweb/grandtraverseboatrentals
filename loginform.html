@@ -115,8 +115,8 @@ input:focus {
             <button type="submit" class="login-btn">Login</button>
         </form>
         <div class="form-footer">
-            <a href="#">Forgot password?</a>
-            <a href="#">Create account</a>
+            <!-- <a href="#">Forgot password?</a>
+            <a href="#">Create account</a> -->
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -158,8 +158,8 @@ input:focus {
     if (isValid) {
         const signIn = async () => {
             const { data, error } = await publicClient.auth.signInWithPassword({
-                email: 'gtrboatform@gmail.com',
-                password: 'Mh@123_4GtrSp',
+                email: email,
+                password: password,
             })
             if( error == null){
                 // if(data.session =! null){
