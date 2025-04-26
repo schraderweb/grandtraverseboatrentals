@@ -157,77 +157,87 @@
 
     <!-- <script  src="https://unpkg.com/@supabase/supabase-js@2"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-
-
-
-
-
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jwt-decode-module@1.0.4/build/jwt-decode.min.js"></script> -->
     
-
-
-
-        var myfile = '';
-
-        const token = localStorage.getItem("token");
-        if(token == null){
-            alert("Please Login First")
-            window.location.href ="/loginform.html"
-        }
+   
+    <script >
+        let refresh_token = localStorage.getItem("refresh_token");
+        let token = localStorage.getItem("token"); 
         const options = {
             global: {
                 headers: { 'Authorization': `Bearer ${token}` },
             },
         }
+        const publicClient = supabase.createClient('https://jcrgvjjjbivmfthfasmp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjcmd2ampqYml2bWZ0aGZhc21wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0MTUxMTcsImV4cCI6MjA1OTk5MTExN30.EDtY_r2Gl63gdThxOvtQXdO9PvbdsP9lCZh1DFNwdR4',options);
+
+        const checkIfConnected = async (token) => {
+            if(token != undefined){
+                const arrayToken = await token.split('.');
+                const tokenPayload = JSON.parse(atob(arrayToken[1]));
+                return Math.floor(new Date().getTime() / 1000) >= tokenPayload?.sub;
+            }else{
+                
+                return true;
+            }
+            
+        }
+        checkIfConnected(token).then((isNotConnected)=> {
+            console.log(isNotConnected);
+            if(isNotConnected){
+                localStorage.setItem("refresh_token",null);
+                localStorage.setItem("token",null); 
+                alert("Please Login First SESSION NULL")
+                window.location.href ="/loginform.html"
+            }else{
+                const list = async () => {
+                    const { data, error } = await publicClient
+                    .from('rental')
+                    .select('id,title');
+            
+                    const El = document.getElementById("list-rentals");
+                    data?.map((d) => {
+                            let oImg = document.createElement("option");
+                            oImg.setAttribute("value",d['id']);
+                            oImg.innerHTML = d.title;
+                            El.appendChild(oImg);
+                    })
+                    El.addEventListener("change",(e) => {
+                        console.log("okay ichanged");
+                        if(e.currentTarget.value != 0 ){
+                            document.getElementById("link-rental").setAttribute("href",`https://grandtraverseboatrentals.com/rental-details.html?id=${e.currentTarget.value}`);
+                            document.getElementById("link-rental").setAttribute("target",`_blank`)
+                            document.getElementById("link-rental-help").innerHTML = "leave any field blank if you don't want to change it"
+                        }else{
+                            document.getElementById("link-rental-help").innerHTML = "leave any field blank if you don't want to add it"
+                        }
+                    })
+                    
+                    
+
+                    return data;
+                }
+                list();
+            }
+        })
+
+        
+
+        
+       
+         
+       
+        
 
 
         
         // const publicClient = supabase.createClient('https://zpdkuhfqrovjupjzjzfa.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwZGt1aGZxcm92anVwanpqemZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM4MDA4NTEsImV4cCI6MjA1OTM3Njg1MX0.NArMJkNJ3ZFSWGYEFeraBHEvFRER4qgaVSwxEdToLlU');
-        const publicClient = supabase.createClient('https://jcrgvjjjbivmfthfasmp.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impjcmd2ampqYml2bWZ0aGZhc21wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0MTUxMTcsImV4cCI6MjA1OTk5MTExN30.EDtY_r2Gl63gdThxOvtQXdO9PvbdsP9lCZh1DFNwdR4',options);
-        
-        const list = async () => {
-        const { data, error } = await publicClient
-        .from('rental')
-        .select('id,title');
- 
-        const El = document.getElementById("list-rentals");
-        data.map((d) => {
-                let oImg = document.createElement("option");
-                oImg.setAttribute("value",d['id']);
-                oImg.innerHTML = d.title;
-                El.appendChild(oImg);
-        })
-        El.addEventListener("change",(e) => {
-            console.log("okay ichanged");
-            if(e.currentTarget.value != 0 ){
-                document.getElementById("link-rental").setAttribute("href",`https://grandtraverseboatrentals.com/rental-details.html?id=${e.currentTarget.value}`);
-                document.getElementById("link-rental").setAttribute("target",`_blank`)
-                document.getElementById("link-rental-help").innerHTML = "leave any field blank if you don't want to change it"
-            }else{
-                document.getElementById("link-rental-help").innerHTML = "leave any field blank if you don't want to add it"
-            }
-        })
-        
-        
+       
+        // if(token == null){
+        //     alert("Please Login First")
+        //     window.location.href ="/loginform.html"
+        // }
+    
 
-        return data;
-    }
-    list();
-
-
-
-        const applicationState = {
-            title: "",
-            description: "",
-            one_day_price: "",
-            three_days_price: "",
-            four_days_price: "",
-            featured_image: "",
-            gallry_image_one: "",
-            gallry_image_two: "",
-            gallry_image_three: "",
-            gallry_image_four: "",
-        }
         document.getElementById('submit-button').onclick = async (e) => {
          
         const selectedValue = document.getElementById("list-rentals").options[document.getElementById("list-rentals").selectedIndex].value;
@@ -597,15 +607,16 @@
         
        
         const deleteRecord = async (selectedValue) => {
-                if(Number(selectedValue) !== 0 )
-                    {
-                        const { error } = await publicClient
-                                    .from('rental')
-                                    .delete()
-                                    .eq('id', Number(selectedValue));
-                                    return error;
-                    }
-                } 
+            if(Number(selectedValue) !== 0 )
+                {
+                    const { error } = await publicClient
+                                .from('rental')
+                                .delete()
+                                .eq('id', Number(selectedValue));
+                                return error;
+                }
+        } 
+        
         document.getElementById("deleteSelected").addEventListener("click", (e) => {
             e.preventDefault();
             const selectedValue = document.getElementById("list-rentals").options[document.getElementById("list-rentals").selectedIndex].value;

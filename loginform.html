@@ -164,6 +164,7 @@ input:focus {
             if( error == null){
                 // if(data.session =! null){
                     localStorage.setItem("token",data.session.access_token);
+                    localStorage.setItem("refresh_token",data.session.access_token);
                     console.log(data.session.access_token);
                     alert('Login successful!');
                     window.location.href = "/rentalform.html";
