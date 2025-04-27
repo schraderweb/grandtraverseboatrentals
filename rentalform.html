@@ -172,9 +172,13 @@
 
         const checkIfConnected = async (token) => {
             if(token != undefined){
-                const arrayToken = await token.split('.');
-                const tokenPayload = JSON.parse(atob(arrayToken[1]));
-                return Math.floor(new Date().getTime() / 1000) >= tokenPayload?.sub;
+                if(token == null){
+                        return true;
+                }else{
+                    const arrayToken = await token.split('.');
+                        const tokenPayload = JSON.parse(atob(arrayToken[1]));
+                        return Math.floor(new Date().getTime() / 1000) >= tokenPayload?.sub;
+                }
             }else{
                 
                 return true;
@@ -193,6 +197,15 @@
                     const { data, error } = await publicClient
                     .from('rental')
                     .select('id,title');
+
+                    if(error){
+                        if(error.code =="PGRST301"){
+                            localStorage.setItem("refresh_token",null);
+                            localStorage.setItem("token",null); 
+                            alert("Please login")
+                            window.location.href ="/loginform.html"
+                        }
+                    }
             
                     const El = document.getElementById("list-rentals");
                     data?.map((d) => {
