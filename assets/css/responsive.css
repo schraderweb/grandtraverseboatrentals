@@ -376,6 +376,10 @@
 
 @media (max-width:767px) {
     
+  .dropdown-menu{
+    background-color: black;
+    display: block;
+  }
     
         .pl-3, .px-3 {
     padding-left: 0 !important;

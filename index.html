@@ -74,11 +74,12 @@
 				<li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
                 <li class="nav-item dropdown"> 
 					<a class="nav-link dropdown-toggle" href="#">Rental Rates</a>
-					<div class="dropdown-menu" style="display: none;"> 
-						<a class="dropdown-item" href="pontoon.html">Pontoon</a> 
+					<div class="dropdown-menu" > 
+						<!-- style="display: none;" -->
+						<!-- <a class="dropdown-item" href="pontoon.html">Pontoon</a> 
 						<a class="dropdown-item" href="sun-tracker-pontoon.html">Sun Tracker Pontoon</a> 
 						<a class="dropdown-item" href="tin-can.html">Tin Can</a>
-						<a class="dropdown-item" href="sea-ark.html">Sea ark</a> 
+						<a class="dropdown-item" href="sea-ark.html">Sea ark</a>  -->
 						<!-- <a class="dropdown-item" ></a> -->
 					</div>
 				
@@ -367,10 +368,10 @@
 					</div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <link rel="stylesheet" type="text/css" href="https://boatclubapp.com/css/NSB_Box.css" /> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><link rel="stylesheet" type="text/css" href="https://boatclubapp.com/css/NSB_Box.css" />
 					
 					
-					<script src="https://boatclubapp.com/js/NSB_Box.js"></script> 
+					<script src="https://boatclubapp.com/js/NSB_Box.js"></script>
 					
 					<center>
 					<a  class="btn btn-primary btn-large custom-btn-css" href="https://boatclubapp.com/Rentals/Index/grandtraverse">Click To Book Now!</a>
@@ -755,6 +756,17 @@ your service available</a></h2> </div>
 	<script src="assets/js/custom.js"></script>
 
 
+	<script>
+		const drpdwntgl = document.querySelectorAll(".dropdown-toggle");
+		drpdwntgl.forEach((el)=>{
+			el.addEventListener("click", (e) =>{
+				e.preventDefault();
+				// el.parentElement.querySelector(".dropdown-menu").style.display = "block";
+				// el.parentElement.querySelector(".dropdown-menu").style.background = "black";
+				// document.querySelector(".mobile-slidebar").style.transform ="translate(255px, 0px)"
+			})
+		})
+	</script>
 	<script  src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 	<script>
@@ -768,6 +780,7 @@ your service available</a></h2> </div>
 		.from('rental')
 		.select('id,title');
 	 
+
   
 		const listEl1 = document.querySelectorAll(".dropdown-menu").forEach((el) => {
 		  el.innerHTML ="";
